@@ -1,0 +1,39 @@
+.page {
+  --gray-rgb: 0, 0, 0;
+  --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
+  --gray-alpha-100: rgba(var(--gray-rgb), 0.05);
+  --button-primary-hover: #383838;
+  --button-secondary-hover: #f2f2f2;
+  align-items: center;
+  justify-items: center;
+  min-height: 100svh;
+  font-family: var(--font-geist-sans);
+  display: flex;
+  flex: 1 1;
+  flex-direction: column;
+  justify-content: center;
+}
+.page .grid {
+  max-width: 940px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+.page .grid .square {
+  height: 80px;
+  margin: 10px 1em;
+  padding-left: 10px;
+  padding-right: 10px;
+  flex: 0 1 20%;
+  justify-content: center;
+  align-items: center;
+}
+.page .grid .square button {
+  width: 100%;
+}
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  grid-row-start: 2;
+}
