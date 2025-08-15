@@ -1,11 +1,12 @@
-import { ReactElement, useEffect } from 'react';
+import { JSXElementConstructor, ReactElement, ReactNode, ReactPortal, useEffect, useState } from 'react';
+
 import { useStoreActions, useStoreState } from '../store/store';
 import styles from '../styles/players.module.css';
 
 const Player = (): ReactElement => {
   const players = useStoreState((state) => state.players);
   const setPlayers = useStoreActions((actions) => actions.setPlayers);
-  console.log(players, 'hahahah');
+  const currentPlayer = useState(players.)
 
   useEffect(() => {
     if (players.length === 0) {
@@ -21,7 +22,8 @@ const Player = (): ReactElement => {
     setPlayers(playerArray);
   };
 
-  const displayPlayers = players.map((player) => {
+  const displayPlayers = players.map((player: { active: boolean; name: string  }) => {
+
     return (
       <div>
         <p
