@@ -1,30 +1,17 @@
 'use client';
 import styles from '../../styles/page.module.css';
-import { useState } from 'react';
 import Grid from '../../components/grid';
-
-interface Player {
-  alias: string;
-  playedSquares: Array<number>;
-  active: boolean;
-}
+import { StoreProvider } from 'easy-peasy';
+import { store } from '../../store/store';
+import Player from '../../components/player';
 
 export default function Home() {
-  const playerOne: Player = {
-    alias: 'PlayerOne',
-    playedSquares: [],
-    active: true,
-  };
-
-  const playerTwo: Player = {
-    alias: 'PlayerTwo',
-    playedSquares: [],
-    active: false,
-  };
-
   return (
-    <div className={styles.page}>
-      <Grid />
-    </div>
+    <StoreProvider store={store}>
+      <div className={styles.page}>
+        <Player />
+        <Grid />
+      </div>
+    </StoreProvider>
   );
 }
