@@ -1,4 +1,5 @@
 import { JSXElementConstructor, ReactElement, ReactNode, ReactPortal, useEffect, useState } from 'react';
+
 import { useStoreActions, useStoreState } from '../store/store';
 import styles from '../styles/players.module.css';
 
@@ -6,6 +7,7 @@ const Player = (): ReactElement => {
   const players = useStoreState((state) => state.players);
   const setPlayers = useStoreActions((actions) => actions.setPlayers);
   const currentPlayer = useState(players.)
+
   useEffect(() => {
     if (players.length === 0) {
       iniatePlayers();
@@ -21,6 +23,7 @@ const Player = (): ReactElement => {
   };
 
   const displayPlayers = players.map((player: { active: boolean; name: string  }) => {
+
     return (
       <div>
         <p
