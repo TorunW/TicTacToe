@@ -1,10 +1,4 @@
-import {
-  createStore,
-  action,
-  thunk,
-  createTypedHooks,
-  Thunk,
-} from 'easy-peasy';
+import { createStore, action, createTypedHooks } from 'easy-peasy';
 import { Action } from 'easy-peasy';
 
 interface Player {

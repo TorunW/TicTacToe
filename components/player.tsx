@@ -1,9 +1,10 @@
-import { ReactElement, useEffect, useState } from 'react';
+'use client';
+import { useEffect, useState } from 'react';
 
-import { useStoreActions, useStoreState } from '../store/store';
+import { useStoreActions, useStoreState } from '../app/store/store';
 import styles from '../styles/players.module.css';
 
-const Player = (): ReactElement => {
+const Player = () => {
   const players = useStoreState((state) => state.players);
   const setPlayers = useStoreActions((actions) => actions.setPlayers);
   //const currentPlayer = useState(players.)
