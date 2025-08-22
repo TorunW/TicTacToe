@@ -7,26 +7,35 @@ import styles from '../styles/players.module.css';
 const Player = () => {
   const players = useStoreState((state) => state.players);
   const setPlayers = useStoreActions((actions) => actions.setPlayers);
-  //const currentPlayer = useState(players.)
+  const currentPlayer = useStoreState((state) => state.currentPlayer);
+  const setCurrentPlayer = useStoreActions(
+    (actions) => actions.setCurrentPlayer
+  );
+
+  const iniatePlayers = () => {
+    const playerArray = [
+      { name: 'PlayerOne', active: true, score: [] },
+      { name: 'Player Two', active: false, score: [] },
+    ];
+
+    setPlayers(playerArray);
+  };
 
   useEffect(() => {
     if (players.length === 0) {
       iniatePlayers();
+    } else {
+      const findCurrentPlayerIndex = players.findIndex((player, index) =>
+        player.active === true ? index + 1 : ''
+      );
+      setCurrentPlayer(players[findCurrentPlayerIndex]);
     }
-  });
-
-  const iniatePlayers = () => {
-    const playerArray = [
-      { name: 'Player One', active: true, score: [] },
-      { name: 'Player Two', active: false, score: [] },
-    ];
-    setPlayers(playerArray);
-  };
+  }, [players, iniatePlayers]);
 
   const displayPlayers = players.map(
     (player: { active: boolean; name: string }) => {
       return (
-        <div>
+        <div key={player.name}>
           <p
             className={
               player.active === true

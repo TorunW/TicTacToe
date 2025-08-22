@@ -1,4 +1,4 @@
-import { createStore, action, createTypedHooks } from 'easy-peasy';
+import { createStore, action, createTypedHooks, Store } from 'easy-peasy';
 import { Action } from 'easy-peasy';
 
 interface Player {
@@ -10,12 +10,22 @@ interface Player {
 interface StoreModel {
   players: Player[];
   setPlayers: Action<StoreModel, Player[]>;
+  currentPlayer: Player;
+  setCurrentPlayer: Action<StoreModel, Player>;
 }
 
 export const store = createStore<StoreModel>({
   players: [],
   setPlayers: action((state, payload) => {
     state.players = payload;
+  }),
+  currentPlayer: {
+    name: '',
+    active: false,
+    score: [],
+  },
+  setCurrentPlayer: action((state, payload) => {
+    state.currentPlayer = payload;
   }),
 });
 
