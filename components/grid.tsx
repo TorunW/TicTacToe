@@ -20,12 +20,23 @@ export default function Grid() {
     setCurrentPlayer(players[findCurrentPlayerIndex]);
   }, [players]);
 
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.currentTarget.disabled = true;
+  };
+
+  const addNumberToArray = (squareNum: number) => {
+    const currentPlayerId = currentPlayer.id;
+
+    players.find((player, index) =>
+      currentPlayerId === player.id ? players[index].score.push(squareNum) : ''
+    );
+
+    //TODO: before change, check winning pattern. If player wins game finish instead of change player, if no winn change
+    changePlayer();
+  };
+
   const changePlayer = () => {
-    //add the number to players array
-    // make the number button disabled aka not able to click on it (fo)
-    //check winning patterns()
-    //if no win then next player
-    let toggleActive = players.map((player) =>
+    const toggleActive = players.map((player) =>
       player.active === true
         ? { ...player, active: false }
         : { ...player, active: true }
@@ -35,7 +46,13 @@ export default function Grid() {
 
   const mapGrid = gridArray.map((squareNum, index) => (
     <div className={styles.square} key={index}>
-      <button value={squareNum} onClick={() => changePlayer()}>
+      <button
+        value={squareNum}
+        onClick={(e) => {
+          addNumberToArray(squareNum);
+          handleClick(e);
+        }}
+      >
         {squareNum}
       </button>
     </div>

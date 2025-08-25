@@ -2,6 +2,7 @@ import { createStore, action, createTypedHooks, Store } from 'easy-peasy';
 import { Action } from 'easy-peasy';
 
 interface Player {
+  id: number;
   name: string;
   active: boolean;
   score: Array<number>;
@@ -20,6 +21,7 @@ export const store = createStore<StoreModel>({
     state.players = payload;
   }),
   currentPlayer: {
+    id: NaN,
     name: '',
     active: false,
     score: [],
