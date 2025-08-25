@@ -7,15 +7,14 @@ import styles from '../styles/players.module.css';
 const Player = () => {
   const players = useStoreState((state) => state.players);
   const setPlayers = useStoreActions((actions) => actions.setPlayers);
-  const currentPlayer = useStoreState((state) => state.currentPlayer);
   const setCurrentPlayer = useStoreActions(
     (actions) => actions.setCurrentPlayer
   );
 
   const iniatePlayers = () => {
     const playerArray = [
-      { name: 'PlayerOne', active: true, score: [] },
-      { name: 'Player Two', active: false, score: [] },
+      { id: 1, name: 'PlayerOne', active: true, score: [] },
+      { id: 2, name: 'Player Two', active: false, score: [] },
     ];
 
     setPlayers(playerArray);
