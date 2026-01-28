@@ -6,6 +6,7 @@ interface Player {
   name: string;
   active: boolean;
   score: Array<number>;
+  hasWon: boolean;
 }
 
 interface StoreModel {
@@ -25,6 +26,7 @@ export const store = createStore<StoreModel>({
     name: '',
     active: false,
     score: [],
+    hasWon: false,
   },
   setCurrentPlayer: action((state, payload) => {
     state.currentPlayer = payload;
