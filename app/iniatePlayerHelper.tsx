@@ -3,6 +3,5 @@ export const iniatePlayerHelper = (setPlayers: (param: any) => void) => {
     { id: 1, name: 'PlayerOne', active: true, score: [], hasWon: false },
     { id: 2, name: 'Player Two', active: false, score: [], hasWon: false },
   ];
-  console.log('resrs');
   setPlayers(playerArray);
 };
