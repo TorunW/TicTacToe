@@ -11,7 +11,8 @@ export default function Grid() {
   const setCurrentPlayer = useStoreActions(
     (actions) => actions.setCurrentPlayer,
   );
-  const [displayWinningMessage, setDisplayWinningMessage] = useState(false);
+  const [winningMessageDisplay, setWinningMessageDisplay] = useState(false);
+  const [drawMessageDisplay, setDrawMessageDisplay] = useState(false);
   const gridArray = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   const winningPatterns = [
     [1, 2, 3],
@@ -41,7 +42,16 @@ export default function Grid() {
     const isPlayerWinning = winningPatterns.some((pattern, index) =>
       pattern.every((num) => playerMoves.includes(num)),
     );
-    isPlayerWinning ? winningScenario() : changePlayer();
+
+    const playersArrLength = players[0].score.length + players[1].score.length;
+
+    if (isPlayerWinning === true) {
+      winningScenario();
+    } else if (isPlayerWinning === false && playersArrLength >= 9) {
+      drawScenario();
+    } else {
+      changePlayer();
+    }
   };
 
   const addMoveToArr = (fieldValue: number) => {
@@ -71,14 +81,20 @@ export default function Grid() {
         players[index].hasWon = true;
       }
     });
-    setDisplayWinningMessage(true);
+    setWinningMessageDisplay(true);
+  };
+
+  const drawScenario = () => {
+    setDrawMessageDisplay(true);
   };
 
   const mapGrid = gridArray.map((fieldValue, index) => (
     <div className={styles.field} key={index}>
       <button
         value={fieldValue}
-        disabled={displayWinningMessage === true ? true : false}
+        disabled={
+          winningMessageDisplay || drawMessageDisplay === true ? true : false
+        }
         onClick={(e) => {
           addMoveToArr(fieldValue);
           handleDisableBtn(e);
@@ -92,15 +108,18 @@ export default function Grid() {
   return (
     <div className={styles.gridPage}>
       <div className={styles.gridContainer}>{mapGrid} </div>
-      {displayWinningMessage === true ? (
+      {winningMessageDisplay || drawMessageDisplay === true ? (
         <div className={styles.overlay}>
           <div className={styles.messageBox}>
-            {currentPlayer.name} has won the game!
+            {winningMessageDisplay === true
+              ? `${currentPlayer.name} has won the game!`
+              : `It is a draw`}
             <br />
             <button
               onClick={() => {
                 iniatePlayerHelper(setPlayers);
-                setDisplayWinningMessage(false);
+                setWinningMessageDisplay(false);
+                setDrawMessageDisplay(false);
               }}
             >
               Restart game
