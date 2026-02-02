@@ -1,8 +1,11 @@
 'use client';
 import styles from '../styles/page.module.css';
+import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { useStoreActions, useStoreState } from '../app/store/store';
 import { iniatePlayerHelper } from '@/app/iniatePlayerHelper';
+import o from '../public/o.svg';
+import x from '../public/x.svg';
 
 export default function Grid() {
   const players = useStoreState((state) => state.players);
@@ -13,6 +16,9 @@ export default function Grid() {
   );
   const [winningMessageDisplay, setWinningMessageDisplay] = useState(false);
   const [drawMessageDisplay, setDrawMessageDisplay] = useState(false);
+  const [clickedFields, setClickedFields] = useState<number[]>([]);
+  type CellValue = 'O' | 'X' | null;
+  const [board, setBoard] = useState<CellValue[]>(Array(9).fill(null));
   const gridArray = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   const winningPatterns = [
     [1, 2, 3],
@@ -30,13 +36,20 @@ export default function Grid() {
       player.active === true ? index + 1 : '',
     );
     setCurrentPlayer(players[findCurrentPlayerIndex]);
-  }, [players]);
+  }, [players, iniatePlayerHelper]);
 
-  const handleDisableBtn = (
+  /*   const handleDisableBtn = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     e.currentTarget.disabled = true;
-  };
+    e.currentTarget.innerHTML = '';
+    const img = document.createElement('img');
+    img.src = currentPlayer.name === 'PlayerOne' ? o.src : x.src;
+    img.width = 35;
+    img.height = 35;
+    img.alt = 'My Image Svg';
+    e.currentTarget.appendChild(img);
+  }; */
 
   const checkWinningPattern = (playerMoves: Array<number>) => {
     const isPlayerWinning = winningPatterns.some((pattern, index) =>
@@ -54,9 +67,15 @@ export default function Grid() {
     }
   };
 
-  const addMoveToArr = (fieldValue: number) => {
+  const onFieldClick = (fieldValue: number) => {
     const currentPlayerId = currentPlayer.id;
+    const index = fieldValue - 1;
 
+    const symbol: CellValue = currentPlayer.name === 'PlayerOne' ? 'O' : 'X';
+
+    const newBoard = [...board];
+    newBoard[index] = symbol;
+    setBoard(newBoard);
     players.find((player, index) => {
       if (currentPlayerId === player.id) {
         players[index].score.push(fieldValue);
@@ -88,22 +107,29 @@ export default function Grid() {
     setDrawMessageDisplay(true);
   };
 
-  const mapGrid = gridArray.map((fieldValue, index) => (
-    <div className={styles.field} key={index}>
-      <button
-        value={fieldValue}
-        disabled={
-          winningMessageDisplay || drawMessageDisplay === true ? true : false
-        }
-        onClick={(e) => {
-          addMoveToArr(fieldValue);
-          handleDisableBtn(e);
-        }}
-      >
-        {fieldValue}
-      </button>
-    </div>
-  ));
+  const mapGrid = gridArray.map((fieldValue) => {
+    const index = fieldValue - 1;
+    const cellValue = board[index];
+
+    return (
+      <div className={styles.field} key={fieldValue}>
+        <button
+          disabled={
+            cellValue !== null || winningMessageDisplay || drawMessageDisplay
+          }
+          onClick={() => onFieldClick(fieldValue)}
+        >
+          {cellValue === 'O' && (
+            <Image src={o} alt='O' width={35} height={35} />
+          )}
+
+          {cellValue === 'X' && (
+            <Image src={x} alt='X' width={35} height={35} />
+          )}
+        </button>
+      </div>
+    );
+  });
 
   return (
     <div className={styles.gridPage}>
@@ -120,6 +146,7 @@ export default function Grid() {
                 iniatePlayerHelper(setPlayers);
                 setWinningMessageDisplay(false);
                 setDrawMessageDisplay(false);
+                setBoard(Array(9).fill(null));
               }}
             >
               Restart game
