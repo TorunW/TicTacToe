@@ -16,8 +16,7 @@ export default function Grid() {
   );
   const [winningMessageDisplay, setWinningMessageDisplay] = useState(false);
   const [drawMessageDisplay, setDrawMessageDisplay] = useState(false);
-  const [clickedFields, setClickedFields] = useState<number[]>([]);
-  type CellValue = 'O' | 'X' | null;
+  type CellValue = 'X' | 'O' | null;
   const [board, setBoard] = useState<CellValue[]>(Array(9).fill(null));
   const gridArray = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   const winningPatterns = [
@@ -37,19 +36,6 @@ export default function Grid() {
     );
     setCurrentPlayer(players[findCurrentPlayerIndex]);
   }, [players, iniatePlayerHelper]);
-
-  /*   const handleDisableBtn = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) => {
-    e.currentTarget.disabled = true;
-    e.currentTarget.innerHTML = '';
-    const img = document.createElement('img');
-    img.src = currentPlayer.name === 'PlayerOne' ? o.src : x.src;
-    img.width = 35;
-    img.height = 35;
-    img.alt = 'My Image Svg';
-    e.currentTarget.appendChild(img);
-  }; */
 
   const checkWinningPattern = (playerMoves: Array<number>) => {
     const isPlayerWinning = winningPatterns.some((pattern, index) =>
@@ -71,7 +57,7 @@ export default function Grid() {
     const currentPlayerId = currentPlayer.id;
     const index = fieldValue - 1;
 
-    const symbol: CellValue = currentPlayer.name === 'PlayerOne' ? 'O' : 'X';
+    const symbol: CellValue = currentPlayer.name === 'PlayerOne' ? 'X' : 'O';
 
     const newBoard = [...board];
     newBoard[index] = symbol;
@@ -119,12 +105,11 @@ export default function Grid() {
           }
           onClick={() => onFieldClick(fieldValue)}
         >
-          {cellValue === 'O' && (
-            <Image src={o} alt='O' width={35} height={35} />
-          )}
-
           {cellValue === 'X' && (
             <Image src={x} alt='X' width={35} height={35} />
+          )}
+          {cellValue === 'O' && (
+            <Image src={o} alt='O' width={35} height={35} />
           )}
         </button>
       </div>
