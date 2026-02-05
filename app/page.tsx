@@ -3,7 +3,7 @@ import Player from '../components/player';
 
 export default function Home() {
   return (
-    <div className='w-90% h-screen justify-center align-center flex flex-col bg-slate-950'>
+    <div className='justify-center align-center flex flex-col gap-30 bg-slate-950'>
       <Player />
       <Grid />
     </div>

@@ -27,7 +27,7 @@ const Player = () => {
       return (
         <div key={player.name}>
           <p
-            className={`${player.active === true ? 'text-sky-300' : 'text-slate-500'}`}
+            className={`text-xl ${player.active === true ? 'text-sky-300 ' : 'text-slate-500'}`}
           >
             {player.name}
           </p>
