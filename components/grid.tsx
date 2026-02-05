@@ -56,7 +56,7 @@ export default function Grid() {
     const currentPlayerId = currentPlayer.id;
     const index = fieldValue - 1;
 
-    const symbol: CellValue = currentPlayer.name === 'PlayerOne' ? 'X' : 'O';
+    const symbol: CellValue = currentPlayer.name === 'Player X' ? 'X' : 'O';
 
     const newBoard = [...board];
     newBoard[index] = symbol;
@@ -131,9 +131,9 @@ export default function Grid() {
     <div className='relative flex flex-col items-center'>
       <div className='grid grid-cols-3 gap-0'>{mapGrid} </div>
       {winningMessageDisplay || drawMessageDisplay === true ? (
-        <div className='absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center'>
-          <div className='bg-white p-6 rounded-lg shadow-lg text-center'>
-            <p className='text-lg font-semibold mb-4'>
+        <div className='fixed inset-0 bg-black/90 flex items-center justify-center overflow-hidden'>
+          <div className='bg-slate-900 rounded-lg p-6 max-w-sm w-full min-h-[120px] flex flex-col items-center justify-center gap-6 text-center border border-sky-300'>
+            <p className='text-lg font-semibold text-stone-200'>
               {winningMessageDisplay === true
                 ? `${currentPlayer.name} has won the game!`
                 : `It is a draw`}{' '}
@@ -145,13 +145,7 @@ export default function Grid() {
                 setDrawMessageDisplay(false);
                 setBoard(Array(9).fill(null));
               }}
-              className='
-              px-4 py-2
-              bg-blue-600 text-white
-              rounded
-              hover:bg-blue-700
-              focus:outline-none focus:ring-2 focus:ring-blue-500
-            '
+              className='px-4 py-2 bg-sky-500 text-stone-200 rounded w-2/4 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500'
             >
               Restart game
             </button>
