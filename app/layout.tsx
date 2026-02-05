@@ -1,15 +1,9 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Orbitron } from 'next/font/google';
 import { StoreProviderCom } from './store/StoreProviderCom';
 import './globals.css';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
+const orbitron = Orbitron({
   subsets: ['latin'],
 });
 
@@ -25,10 +19,8 @@ export default function RootLayout({
 }>) {
   return (
     <StoreProviderCom>
-      <html lang='en' suppressHydrationWarning>
-        <body className={`${geistSans.variable} ${geistMono.variable}`}>
-          {children}
-        </body>
+      <html lang='en' className={orbitron.className} suppressHydrationWarning>
+        <body>{children}</body>
       </html>
     </StoreProviderCom>
   );

@@ -1,7 +1,6 @@
 'use client';
 import { useEffect } from 'react';
 import { useStoreActions, useStoreState } from '../app/store/store';
-import styles from '../styles/players.module.css';
 import { iniatePlayerHelper } from '@/app/iniatePlayerHelper';
 
 const Player = () => {
@@ -28,11 +27,7 @@ const Player = () => {
       return (
         <div key={player.name}>
           <p
-            className={
-              player.active === true
-                ? styles.playerActive
-                : styles.playerInactive
-            }
+            className={`${player.active === true ? 'text-sky-300' : 'text-slate-500'}`}
           >
             {player.name}
           </p>
@@ -41,7 +36,9 @@ const Player = () => {
     },
   );
 
-  return <div>{displayPlayers}</div>;
+  return (
+    <div className='flex flex-row w-full justify-between'>{displayPlayers}</div>
+  );
 };
 
 export default Player;
