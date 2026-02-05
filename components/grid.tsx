@@ -145,7 +145,7 @@ export default function Grid() {
                 setDrawMessageDisplay(false);
                 setBoard(Array(9).fill(null));
               }}
-              className='px-4 py-2 bg-sky-600 text-stone-200 rounded w-2/4 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500'
+              className='px-4 py-2 bg-sky-500 text-stone-200 rounded w-2/4 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500'
             >
               Restart game
             </button>
