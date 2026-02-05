@@ -1,5 +1,4 @@
 'use client';
-import styles from '../styles/page.module.css';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { useStoreActions, useStoreState } from '../app/store/store';
@@ -98,18 +97,30 @@ export default function Grid() {
     const cellValue = board[index];
 
     return (
-      <div className={styles.field} key={fieldValue}>
+      <div
+        className='flex items-center justify-center
+      [&:nth-child(-n+3)_button]:border-t-0
+      [&:nth-child(n+7)_button]:border-b-0
+      [&:nth-child(3n+1)_button]:border-l-0
+      [&:nth-child(3n)_button]:border-r-0'
+        key={fieldValue}
+      >
         <button
           disabled={
             cellValue !== null || winningMessageDisplay || drawMessageDisplay
           }
           onClick={() => onFieldClick(fieldValue)}
+          className='w-30 h-30 border border-sky-300 
+          flex items-center justify-center disabled:cursor-not-allowed 
+          disabled:bg-slate-950
+          disabled:hover:bg-slate-950 disabled:hover:opacity-100 hover:bg-sky-950/40'
+          aria-label={`Cell ${fieldValue}`}
         >
           {cellValue === 'X' && (
-            <Image src={x} alt='X' width={35} height={35} />
+            <Image src={x} alt='X' width={45} height={45} />
           )}
           {cellValue === 'O' && (
-            <Image src={o} alt='O' width={35} height={35} />
+            <Image src={o} alt='O' width={45} height={45} />
           )}
         </button>
       </div>
@@ -117,15 +128,16 @@ export default function Grid() {
   });
 
   return (
-    <div className={styles.gridPage}>
-      <div className={styles.gridContainer}>{mapGrid} </div>
+    <div className='relative flex flex-col items-center'>
+      <div className='grid grid-cols-3 gap-0'>{mapGrid} </div>
       {winningMessageDisplay || drawMessageDisplay === true ? (
-        <div className={styles.overlay}>
-          <div className={styles.messageBox}>
-            {winningMessageDisplay === true
-              ? `${currentPlayer.name} has won the game!`
-              : `It is a draw`}
-            <br />
+        <div className='absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center'>
+          <div className='bg-white p-6 rounded-lg shadow-lg text-center'>
+            <p className='text-lg font-semibold mb-4'>
+              {winningMessageDisplay === true
+                ? `${currentPlayer.name} has won the game!`
+                : `It is a draw`}{' '}
+            </p>
             <button
               onClick={() => {
                 iniatePlayerHelper(setPlayers);
@@ -133,6 +145,13 @@ export default function Grid() {
                 setDrawMessageDisplay(false);
                 setBoard(Array(9).fill(null));
               }}
+              className='
+              px-4 py-2
+              bg-blue-600 text-white
+              rounded
+              hover:bg-blue-700
+              focus:outline-none focus:ring-2 focus:ring-blue-500
+            '
             >
               Restart game
             </button>
