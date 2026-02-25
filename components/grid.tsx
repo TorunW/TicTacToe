@@ -34,10 +34,10 @@ export default function Grid() {
       player.active === true ? index + 1 : '',
     );
     setCurrentPlayer(players[findCurrentPlayerIndex]);
-  }, [players, iniatePlayerHelper]);
+  }, [players, setCurrentPlayer]);
 
   const checkWinningPattern = (playerMoves: Array<number>) => {
-    const isPlayerWinning = winningPatterns.some((pattern, index) =>
+    const isPlayerWinning = winningPatterns.some((pattern) =>
       pattern.every((num) => playerMoves.includes(num)),
     );
 
@@ -64,7 +64,7 @@ export default function Grid() {
     players.find((player, index) => {
       if (currentPlayerId === player.id) {
         players[index].score.push(fieldValue);
-        let playerMoves = player.score;
+        const playerMoves = player.score;
         checkWinningPattern(playerMoves);
       }
     });

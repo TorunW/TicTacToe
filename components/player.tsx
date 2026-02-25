@@ -20,14 +20,14 @@ const Player = () => {
       );
       setCurrentPlayer(players[findCurrentPlayerIndex]);
     }
-  }, [players, iniatePlayerHelper]);
+  }, [players, setCurrentPlayer, setPlayers]);
 
   const displayPlayers = players.map(
     (player: { active: boolean; name: string }) => {
       return (
         <div key={player.name}>
           <p
-            className={`${player.active === true ? 'text-sky-300' : 'text-slate-500'}`}
+            className={` ${player.active === true ? 'text-sky-300 text-xl' : 'text-slate-500 text-xl'} `}
           >
             {player.name}
           </p>
