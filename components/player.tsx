@@ -37,7 +37,9 @@ const Player = () => {
   );
 
   return (
-    <div className='flex flex-row w-full justify-between'>{displayPlayers}</div>
+    <div className='flex flex-row w-full max-w-200 justify-between'>
+      {displayPlayers}
+    </div>
   );
 };
 
