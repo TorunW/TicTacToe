@@ -129,7 +129,9 @@ export default function Grid() {
 
   return (
     <div className='relative flex flex-col items-center max-w-120 '>
-      <div className='grid grid-cols-3 gap-0'>{mapGrid} </div>
+      <div className='grid grid-cols-3 gap-0' role='grid'>
+        {mapGrid}
+      </div>
       {winningMessageDisplay || drawMessageDisplay === true ? (
         <div className='fixed inset-0 bg-black/90 flex items-center justify-center overflow-hidden'>
           <div className='bg-slate-900 rounded-lg p-6 max-w-sm w-full min-h-[120px] flex flex-col items-center justify-center gap-6 text-center border border-sky-300'>
