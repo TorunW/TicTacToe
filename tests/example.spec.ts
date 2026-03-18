@@ -9,7 +9,7 @@ test('Verify that there is 9 cells and that all are enabled', async ({
 }) => {
   const { tictacBoard } = board;
 
-  await page.goto('http://localhost:3000/');
+  await page.goto('https://tic-tac-toe-tau-lyart-50.vercel.app/');
 
   const cells = tictacBoard.getByRole('button');
   await expect(cells).toHaveCount(9);
