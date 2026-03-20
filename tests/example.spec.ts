@@ -4,7 +4,7 @@ import { test } from './base-test';
 test('Verify that the board is a 3x3 grid', async ({ page, board }) => {
   const { tictacBoard } = board;
 
-  await page.goto('http://localhost:3000/');
+  await page.goto('https://tic-tac-toe-tau-lyart-50.vercel.app/');
   //expect 3 rows in grid
   const cellRows = tictacBoard.getByRole('row');
   await expect(cellRows).toHaveCount(3);
