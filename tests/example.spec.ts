@@ -1,7 +1,19 @@
 import { expect } from '@playwright/test';
 import { test } from './base-test';
 
-//do fixtures - array of al board cells - then all one by one?
+test('Verify that the board is a 3x3 grid', async ({ page, board }) => {
+  const { tictacBoard } = board;
+
+  await page.goto('http://localhost:3000/');
+  //expect 3 rows in grid
+  const cellRows = tictacBoard.getByRole('row');
+  await expect(cellRows).toHaveCount(3);
+  //expect 3 cells in each row
+  const count = await cellRows.count();
+  for (let i = 0; i < count; i++) {
+    await expect(cellRows.nth(i).getByRole('gridcell')).toHaveCount(3);
+  }
+});
 
 test('Verify that there is 9 cells and that all are enabled', async ({
   page,
@@ -32,7 +44,6 @@ test('Verify that valid moves (empty cells) are accepted', async ({
   await cellOne.click();
   await tictacBoard.getByRole('button', { name: 'Cell 2' }).click();
   await tictacBoard.getByRole('button', { name: 'Cell 3' }).click();
-  //await page.getByRole('image', { name: 'X' })
 
   // Expect a image called "X"
   await expect(cellOne.getByAltText('X')).toBeVisible();

@@ -17,7 +17,7 @@ export default function Grid() {
   const [drawMessageDisplay, setDrawMessageDisplay] = useState(false);
   type CellValue = 'X' | 'O' | null;
   const [board, setBoard] = useState<CellValue[]>(Array(9).fill(null));
-  const gridArray = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const gridArray: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   const winningPatterns = [
     [1, 2, 3],
     [4, 5, 6],
@@ -91,7 +91,7 @@ export default function Grid() {
   const drawScenario = () => {
     setDrawMessageDisplay(true);
   };
-
+  /* 
   const mapGrid = gridArray.map((fieldValue) => {
     const index = fieldValue - 1;
     const cellValue = board[index];
@@ -104,6 +104,8 @@ export default function Grid() {
       [&:nth-child(3n+1)_button]:border-l-0
       [&:nth-child(3n)_button]:border-r-0'
         key={fieldValue}
+        role='gridcell'
+        aria-label={`Cell ${fieldValue}`}
       >
         <button
           disabled={
@@ -125,13 +127,57 @@ export default function Grid() {
         </button>
       </div>
     );
-  });
+  }); */
+
+  const chunkArray = (arr: Array<number>, size: number) =>
+    Array.from({ length: arr.length / size }, (_, i) =>
+      arr.slice(i * size, i * size + size),
+    );
+
+  const rows = chunkArray(gridArray, 3);
+
+  const mapGrid = rows.map((row, rowIndex) => (
+    <div key={rowIndex} role='row' className='grid grid-cols-3 gap-0'>
+      {row.map((fieldValue: number, colIndex: number) => {
+        const index = fieldValue - 1;
+        const cellValue = board[index];
+
+        return (
+          <div
+            className='flex items-center justify-center'
+            key={fieldValue}
+            aria-rowindex={rowIndex + 1}
+            aria-colindex={colIndex + 1}
+            role='gridcell'
+            aria-label={`Cell ${fieldValue}`}
+          >
+            <button
+              disabled={
+                cellValue !== null ||
+                winningMessageDisplay ||
+                drawMessageDisplay
+              }
+              onClick={() => onFieldClick(fieldValue)}
+              className={`w-30 h-30 border border-sky-300 flex items-center justify-center ${rowIndex === 0 ? 'border-t-0' : ''} ${rowIndex === 2 ? 'border-b-0' : ''} ${colIndex === 0 ? 'border-l-0' : ''} ${colIndex === 2 ? 'border-r-0' : ''} disabled:cursor-not-allowed disabled:bg-slate-950 disabled:hover:bg-slate-950 disabled:hover:opacity-100 hover:bg-sky-950/40`}
+              aria-label={`Cell ${fieldValue}`}
+            >
+              {cellValue === 'X' && (
+                <Image src={x} alt='X' width={45} height={45} />
+              )}
+              {cellValue === 'O' && (
+                <Image src={o} alt='O' width={45} height={45} />
+              )}
+            </button>
+          </div>
+        );
+      })}
+    </div>
+  ));
 
   return (
     <div className='relative flex flex-col items-center max-w-120 '>
-      <div className='grid grid-cols-3 gap-0' role='grid'>
-        {mapGrid}
-      </div>
+      <div role='grid'>{mapGrid}</div>
+
       {winningMessageDisplay || drawMessageDisplay === true ? (
         <div className='fixed inset-0 bg-black/90 flex items-center justify-center overflow-hidden'>
           <div className='bg-slate-900 rounded-lg p-6 max-w-sm w-full min-h-[120px] flex flex-col items-center justify-center gap-6 text-center border border-sky-300'>
